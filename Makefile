@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/05 13:29:23 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/05 15:34:06 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS = $(SRCS:.c=.o)
 OBJS_FILES = $(addprefix $(OBJS_DIR), $(OBJS))
 
 CC = cc
-CFLAGS =  -I./include -Wall -Werror -Wextra #-fsanitize=address -g3
+CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
 RM = rm -rf
 
 all : $(OBJS_DIR) lib

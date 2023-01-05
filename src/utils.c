@@ -6,17 +6,11 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:14:39 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/05 14:54:26 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/05 15:21:14 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	exit_handler(void)
-{
-	ft_putstr_fd("./pipex infile cmd1 cmd2 outfile\n", 2);
-	exit(1);
-}
 
 void	free_tab(char **tab)
 {
