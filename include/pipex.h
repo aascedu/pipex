@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/05 17:57:06 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 11:33:18 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*find_path(char **envp);
 char	*get_path(char *cmd, char **envp);
 
 void	child_process(char **argv, char **envp, int *p_end);
+void	child2_process(char **argv, char **envp, int *p_end);
 void	do_cmd(char *cmd, char **envp);
 void	free_tab(char **tab);
-void	parent_process(char **argv, char **envp, int *p_end);
 
 #endif

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/06 09:27:30 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/06 09:29:00 by aascedu          ###   ########lyon.fr   */
+/*   Created: 2023/01/06 09:28:09 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/06 09:28:14 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin_free2(const char *s1, const char *s2)
 {
 	char	*res;
 	int		i;
@@ -36,5 +36,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		j++;
 	}
 	res[i + j] = '\0';
+	free((char *)s2);
 	return (res);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+         #
+#    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/05 18:54:40 by arthurasced      ###   ########lyon.fr    #
+#    Updated: 2023/01/06 16:01:46 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS_DIR = ./src/
 SRCS = main.c utils.c
 
 SRCS_BONUS_DIR = ./src_bonus/
-SRCS_BONUS = main_bonus.c utils_bonus.c
+SRCS_BONUS = main_bonus.c utils_bonus.c error.c
 
 SRCS_FILES = $(addprefix $(SRCS_DIR), $(SRCS))
 SRCS_BONUS_FILES = $(addprefix $(SRCS_BONUS_DIR), $(SRCS_BONUS))

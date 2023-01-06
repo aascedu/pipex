@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/05 18:32:03 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/01/06 16:00:49 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@
 # include <errno.h>
 # include <string.h>
 
+// utils_bonus.c functions
+void	free_tab(char **tab);
+void	wrong_arg(int error);
+int		my_open(int argc, char **argv, int type);
 char	*find_path(char **envp);
 char	*get_path(char *cmd, char **envp);
 
-void	child_process(char **argv, char **envp, int *p_end);
+// main_bonus.c functions
 void	do_cmd(char *cmd, char **envp);
-void	free_tab(char **tab);
-void	parent_process(char **argv, char **envp, int *p_end);
-void	wrong_arg(void);
+void	get_input(char **argv, int *p_fd);
+void	here_doc(char **argv);
+void	multiple_pipe(char *cmd, char **envp);
+
+// error.c functions
+void	error_display(void);
 
 #endif
