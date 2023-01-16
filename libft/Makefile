@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 15:12:19 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/06 13:17:33 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/16 08:38:40 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,7 @@ GREEN=$'\x1b[32m
 SRC_DIR = ./src/
 
 SRCS =  ft_strlen.c ft_bzero.c ft_strncmp.c ft_calloc.c ft_substr.c \
-		ft_strjoin.c ft_split.c ft_putstr_fd.c ft_putendl_fd.c ft_strdup.c \
-		get_next_line.c get_next_line_utils.c ft_strjoin_free2.c ft_strtrim.c \
+		ft_strjoin.c ft_split.c ft_putstr_fd.c ft_putendl_fd.c \
 
 SRCS_PREFIX = $(addprefix $(SRC_DIR), $(SRCS))
 

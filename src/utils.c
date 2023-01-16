@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:14:39 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/05 15:21:14 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 08:35:15 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*get_path(char *cmd, char **envp)
 		try_path = ft_strjoin(path_splitted[i], "/");
 		try_cmd = ft_strjoin(try_path, cmd);
 		if (access(try_cmd, F_OK | X_OK) == 0)
-		{
 			return (free(try_path), free_tab(path_splitted), try_cmd);
-		}
 		free(try_cmd);
 		free(try_path);
 		i++;
