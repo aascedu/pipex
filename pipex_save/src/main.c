@@ -5,14 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 10:29:09 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/16 09:48:16 by aascedu          ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:35:55 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 08:36:01 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-#include <stdio.h>
 void	do_cmd(char *cmd, char **envp)
 {
 	char	*path;

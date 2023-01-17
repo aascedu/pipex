@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 17:33:49 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/16 17:44:52 by arthurasced      ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:37:00 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 11:26:42 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	*find_path(char **envp)
+static char	*find_path(char **envp)
 {
 	int		i;
 	int		j;
@@ -33,7 +33,7 @@ char	*find_path(char **envp)
 	return (NULL);
 }
 
-char	*get_path(char *cmd, char **envp)
+static char	*get_path(t_pipex *data)
 {
 	int		i;
 	char	*try_path;
@@ -41,15 +41,15 @@ char	*get_path(char *cmd, char **envp)
 	char	*total_path;
 	char	**path_splitted;
 
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (cmd);
-	total_path = find_path(envp);
+	if (access(data->av[data->i], F_OK | X_OK) == 0)
+		return (data->av[data->i]);
+	total_path = find_path(data->envp);
 	path_splitted = ft_split(total_path + 5, ':');
 	i = 0;
 	while (path_splitted[i])
 	{
 		try_path = ft_strjoin(path_splitted[i], "/");
-		try_cmd = ft_strjoin(try_path, cmd);
+		try_cmd = ft_strjoin(try_path, data->av[data->i]);
 		if (access(try_cmd, F_OK | X_OK) == 0)
 			return (free(try_path), free_tab(path_splitted), try_cmd);
 		free(try_cmd);
@@ -59,15 +59,18 @@ char	*get_path(char *cmd, char **envp)
 	return (free_tab(path_splitted), NULL);
 }
 
-void	do_cmd_b(char *cmd, char **envp)
+void	do_cmd(t_pipex *data)
 {
 	char	*path;
 	char	**cmd_splitted;
 
-	cmd_splitted = ft_split(cmd, ' ');
-	path = get_path(cmd_splitted[0], envp);
-	execve(path, cmd_splitted, envp);
+	cmd_splitted = ft_split(data->av[data->i], ' ');
+	path = get_path(data);
+	if (execve(path, cmd_splitted, data->envp) == 0)
+	{
 	free(path);
 	free_tab(cmd_splitted);
 	ft_putendl_fd(strerror(errno), 2);
+	exit(1);
+	}
 }

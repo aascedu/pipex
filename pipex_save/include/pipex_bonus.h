@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/16 17:42:31 by arthurasced      ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 11:28:22 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,22 @@
 # include <errno.h>
 # include <string.h>
 
-char	*find_path(char **envp);
-char	*get_path(char *cmd, char **envp);
+typedef struct s_pipex
+{
+	int		i;
+	int		fd_entry;
+	int		fd_exit;
+	int		ac;
+	int		**p_fd;
+	char	**av;
+	char	**envp;
+}		t_pipex;
 
-int	my_open(int argc, char **argv, char *rule);
+int		my_open(t_pipex *data, char *rule);
 
-void	child_process(char **argv, char **envp, int *p_end);
-void	do_cmd_b(char *cmd, char **envp);
+void	do_cmd(t_pipex *data);
 void	free_tab(char **tab);
-void	parent_process(char **argv, char **envp, int *p_end);
-void	wrong_arg_b(char *error);
+void	pipex(t_pipex *data);
+void	wrong_arg(char *error);
 
 #endif

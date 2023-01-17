@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/06 11:33:18 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 12:12:44 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <stdio.h>
 
 char	*find_path(char **envp);
 char	*get_path(char *cmd, char **envp);

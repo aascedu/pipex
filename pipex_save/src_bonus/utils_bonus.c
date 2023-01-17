@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 18:22:39 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/16 17:48:01 by arthurasced      ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 11:19:44 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-int	my_open(int argc, char **argv, char *rule)
+int	my_open(t_pipex *data, char *rule)
 {
 	int	fd;
 
 	fd = 0;
 	if (ft_strncmp(rule, "DOC", 3) == 0)
-		fd = open(argv[argc - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
+		fd = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
 	else if (ft_strncmp(rule, "OPEN", 4) == 0)
-		fd = open(argv[1], O_RDONLY);
+		fd = open(data->av[1], O_RDONLY);
 	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
-		fd = open(argv[1], O_RDWR | O_TRUNC | O_CREAT, 0644);
+		fd = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
 	if (fd <= 0)
 	{
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);

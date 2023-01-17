@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 17:59:38 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/16 17:48:40 by arthurasced      ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:36:41 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 11:31:40 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	pipex(char *cmd, char **envp)
+void	pipex(t_pipex *data)
 {
 	int		p_end[2];
 	pid_t	pid;
-	
+
 	if (pipe(p_end) == -1)
 		exit(0);
 	pid = fork();
@@ -26,7 +26,7 @@ void	pipex(char *cmd, char **envp)
 	{
 		close(p_end[0]);
 		dup2(p_end[1], 1);
-		do_cmd_b(cmd, envp);
+		do_cmd(data);
 	}
 	else
 	{
@@ -37,30 +37,31 @@ void	pipex(char *cmd, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
-	int	fd_entry;
-	int	fd_exit;
+	t_pipex	data;
 
-	if (argc < 5)
-		wrong_arg_b("too_few");
-	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+	data.ac = argc;
+	data.av = argv;
+	data.envp = envp;
+	malloc_fd(&data);
+	if (data.ac < 5)
+		wrong_arg("too_few");
+	if (ft_strncmp(data.av[1], "here_doc", 8) == 0)
 	{
 		// if (argc > 6)
 		// 	wrong_arg("too_many");
-		// i = 3;
-		// fd_exit = my_open(argc, argv, "DOC");
-		// here_doc(argv, envp);
+		// i = 2;
+		// data->fd_exit = my_open(data, "DOC");
+		// here_doc(data);
 		exit(1);
 	}
 	else
 	{
-		fd_entry = my_open(argc, argv, "OPEN");
-		fd_exit = my_open(argc, argv, "CLOSE");
-		dup2(fd_entry, 0);
-		i = 2;
+		data.fd_entry = my_open(&data, "OPEN");
+		data.fd_exit = my_open(&data, "CLOSE");
+		data.i = 1;
 	}
-	while (i < argc - 2)
-		pipex(argv[i++], envp);
-	dup2(fd_exit, 1);
-	do_cmd_b(argv[argc - 2], envp);
+	while (++data.i < data.ac - 1)
+		pipex(&data);
+	close_fd
+	return (0);
 }

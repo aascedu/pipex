@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthurascedu <arthurascedu@student.42ly    +#+  +:+       +#+        */
+/*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 17:28:43 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/16 17:45:01 by arthurasced      ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:37:14 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 10:01:03 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	wrong_arg_b(char *error)
+void	wrong_arg(char *error)
 {
 	if (ft_strncmp(error, "too_few", 7) == 0)
 		ft_putendl_fd("Too few args, see subject.", STDERR_FILENO);
