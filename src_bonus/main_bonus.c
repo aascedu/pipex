@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:36:41 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/17 11:31:40 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/17 14:44:42 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
 
-	data.ac = argc;
-	data.av = argv;
-	data.envp = envp;
-	malloc_fd(&data);
+	init_data(&data, argc, argv, envp);
 	if (data.ac < 5)
 		wrong_arg("too_few");
+	malloc_fd(&data);
 	if (ft_strncmp(data.av[1], "here_doc", 8) == 0)
 	{
 		// if (argc > 6)
@@ -62,6 +60,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (++data.i < data.ac - 1)
 		pipex(&data);
-	close_fd
+	close_fd(&data);
 	return (0);
 }

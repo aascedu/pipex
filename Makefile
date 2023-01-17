@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/16 08:34:06 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/17 15:14:35 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,47 +15,44 @@ NAME = pipex
 LIBFT_DIR = ./libft/
 LIBFT = ./libft/libft.a
 
-HEADER = pipex.h
+HEADER = pipex.h pipex_bonus.h
 
-SRCS_DIR = ./src/
-SRCS = main.c utils.c
-SRCS_FILES = $(addprefix $(SRCS_DIR), $(SRCS))
+SRCS = src/main.c src/utils.c
+SRCS_BONUS = src_bonus/cmd_bonus.c src_bonus/exit_bonus.c \
+			src_bonus/main_bonus.c src_bonus/utils_bonus.c \
+			src_bonus/init_bonus.c \
 
-OBJS_DIR = ./objects/
 OBJS = $(SRCS:.c=.o)
-OBJS_FILES = $(addprefix $(OBJS_DIR), $(OBJS))
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = cc
 CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
 RM = rm -rf
 
-all : $(OBJS_DIR) lib
+%.o : %.c ./include/$(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all : lib
 	make $(NAME)
 
+$(NAME) : $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
+
+bonus : $(OBJS_BONUS) $(LIBFT)
+	$(CC) $(CFLAGS) $(LIBFT) $(OBJS_BONUS) -o $(NAME)
+
 lib :
-	make -j -C $(LIBFT_DIR)
-
-$(OBJS_DIR) :
-	mkdir $(OBJS_DIR)
-
-$(OBJS_BONUS_DIR) :
-	mkdir $(OBJS_BONUS_DIR)
-
-$(OBJS_DIR)%.o : $(SRCS_DIR)%.c ./include/$(HEADER)
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-$(NAME) : $(OBJS_FILES) $(LIBFT)
-	$(CC) $(CFLAGS) $(LIBFT) $(OBJS_FILES) -o $(NAME)
+	make -C $(LIBFT_DIR)
 
 clean :
-	$(RM) $(OBJS_DIR) $(OBJS_BONUS_DIR)
+	$(RM)
 	make clean -C $(LIBFT_DIR)
 
 fclean : clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(OBJS) $(OBJS_BONUS)
 	make fclean -C $(LIBFT_DIR)
 
 re : fclean
 	make all
 
-.PHONY : all lib clean fclean re
+.PHONY : all lib clean fclean bonus re

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 10:29:09 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/16 12:17:29 by aascedu          ###   ########lyon.fr   */
+/*   Created: 2023/01/17 08:35:55 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/17 08:36:01 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,11 @@ void	do_cmd(char *cmd, char **envp)
 
 	cmd_splitted = ft_split(cmd, ' ');
 	path = get_path(cmd_splitted[0], envp);
-	if (!path)
-	{
-		free_tab(cmd_splitted);
-		ft_putstr_fd("Command not found : ", STDERR_FILENO);
-		ft_putendl_fd(cmd, STDERR_FILENO);
-		exit(1);
-	}
 	if (execve(path, cmd_splitted, envp) == -1)
 	{
 		free(path);
 		free_tab(cmd_splitted);
-		ft_putstr_fd("Command not found : ", STDERR_FILENO);
-		ft_putendl_fd(cmd, STDERR_FILENO);
+		ft_putendl_fd(strerror(errno), 2);
 		exit(1);
 	}
 }
@@ -43,14 +35,13 @@ void	child_process(char **argv, char **envp, int *p_end)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		exit(1);
 	}
 	dup2(fd, 0);
 	dup2(p_end[1], 1);
 	close(p_end[0]);
 	do_cmd(argv[2], envp);
-	close(p_end[1]);
 }
 
 void	child2_process(char **argv, char **envp, int *p_end)
@@ -60,14 +51,13 @@ void	child2_process(char **argv, char **envp, int *p_end)
 	fd = open(argv[4], O_RDWR | O_TRUNC | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		exit(1);
 	}
 	dup2(fd, 1);
 	dup2(p_end[0], 0);
 	close(p_end[1]);
 	do_cmd(argv[3], envp);
-	close(p_end[0]);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -77,12 +67,9 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid2;
 
 	if (argc != 5)
-	{
-		ft_putendl_fd("Wrong number of args", 2);
-		ft_putendl_fd("Usage: ./pipex infile \"cmd1\" \"cmd2\" outfile", 2);
+		ft_putstr_fd("./pipex infile cmd1 cmd2 outfile\n", 2);
+	if (argc != 5)
 		exit(1);
-	}
-
 	if (pipe(p_end) == -1)
 		return (1);
 	pid1 = fork();
