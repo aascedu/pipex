@@ -6,11 +6,20 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 13:37:27 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:56:23 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	wrong_arg(char *error)
+{
+	if (ft_strncmp(error, "too_few", 7) == 0)
+		ft_putendl_fd("Too few args, see subject.", STDERR_FILENO);
+	if (ft_strncmp(error, "too_many", 8) == 0)
+		ft_putendl_fd("Too many args, see subject.", STDERR_FILENO);
+	exit(1);
+}
 
 void	free_tab(char **tab)
 {
@@ -25,17 +34,11 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-void	free_fd(int **p_fd, int size)
+void	init_data(t_pipex *data, int argc, char **argv, char **envp)
 {
-	int	i;
-
-	i = 0;
-	while (i <= size)
-	{
-		free(p_fd[i]);
-		i++;
-	}
-	free(p_fd);
+	data->ac = argc;
+	data->av = argv;
+	data->envp = envp;
 }
 
 int	my_open(t_pipex *data, char *rule)

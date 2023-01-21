@@ -6,82 +6,56 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:35:55 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/17 08:36:01 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 17:02:18 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	do_cmd(char *cmd, char **envp)
+void	pipex(t_pipex *data)
 {
-	char	*path;
-	char	**cmd_splitted;
+	int		p_end[2];
+	pid_t	pid;
 
-	cmd_splitted = ft_split(cmd, ' ');
-	path = get_path(cmd_splitted[0], envp);
-	if (execve(path, cmd_splitted, envp) == -1)
+	if (data->i == data->ac - 2)
+		dup2(data->fd_exit, STDOUT_FILENO);
+	else if (pipe(p_end) == -1)
+		exit(0);
+	pid = fork();
+	if (pid == -1)
+		exit(0);
+	if (!pid)
 	{
-		free(path);
-		free_tab(cmd_splitted);
-		ft_putendl_fd(strerror(errno), 2);
-		exit(1);
+		if (data->i != data->ac - 2)
+		{
+			close(p_end[0]);
+			dup2(p_end[1], STDOUT_FILENO);
+		}
+		do_cmd(data);
 	}
-}
-
-void	child_process(char **argv, char **envp, int *p_end)
-{
-	int	fd;
-
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
+	else if (pid && data->i != data->ac - 2)
 	{
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		exit(1);
+		close(p_end[1]);
+		dup2(p_end[0], STDIN_FILENO);
 	}
-	dup2(fd, 0);
-	dup2(p_end[1], 1);
-	close(p_end[0]);
-	do_cmd(argv[2], envp);
-}
-
-void	child2_process(char **argv, char **envp, int *p_end)
-{
-	int	fd;
-
-	fd = open(argv[4], O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (fd < 0)
-	{
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		exit(1);
-	}
-	dup2(fd, 1);
-	dup2(p_end[0], 0);
-	close(p_end[1]);
-	do_cmd(argv[3], envp);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int		p_end[2];
-	pid_t	pid1;
-	pid_t	pid2;
+	t_pipex	data;
 
-	if (argc != 5)
-		ft_putstr_fd("./pipex infile cmd1 cmd2 outfile\n", 2);
-	if (argc != 5)
-		exit(1);
-	if (pipe(p_end) == -1)
-		return (1);
-	pid1 = fork();
-	if (pid1 < 0)
-		return (1);
-	else if (!pid1)
-		child_process(argv, envp, p_end);
-	pid2 = fork();
-	if (pid2 < 0)
-		return (1);
-	else if (!pid2)
-		child2_process(argv, envp, p_end);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	init_data(&data, argc, argv, envp);
+	if (data.ac < 5)
+		wrong_arg("too_few");
+	if (data.ac > 5)
+		wrong_arg("too_many");
+	data.fd_entry = my_open(&data, "OPEN");
+	data.fd_exit = my_open(&data, "CLOSE");
+	dup2(data.fd_entry, STDIN_FILENO);
+	data.i = 1;
+	while (++data.i < data.ac - 1)
+		pipex(&data);
+	while (data.i-- > 0)
+		wait(NULL);
+	return (0);
 }

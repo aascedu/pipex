@@ -6,12 +6,12 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/06 11:33:18 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 17:02:03 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "../libft/include/libft.h"
 # include <unistd.h>
@@ -21,12 +21,28 @@
 # include <errno.h>
 # include <string.h>
 
-char	*find_path(char **envp);
-char	*get_path(char *cmd, char **envp);
+typedef struct s_pipex
+{
+	int		i;
+	int		fd_entry;
+	int		fd_exit;
+	int		ac;
+	char	**av;
+	char	**envp;
+}		t_pipex;
 
-void	child_process(char **argv, char **envp, int *p_end);
-void	child2_process(char **argv, char **envp, int *p_end);
-void	do_cmd(char *cmd, char **envp);
+// main_bonus.c functions
+void	pipex(t_pipex *data);
+
+// utils_bonus.c functions
+void	wrong_arg(char *error);
 void	free_tab(char **tab);
+void	init_data(t_pipex *data, int argc, char **argv, char **envp);
+int		my_open(t_pipex *data, char *rule);
+
+// cmd_bonus.c functions
+char	*find_path(char **envp);
+char	*get_path(t_pipex *data, char *cmd);
+void	do_cmd(t_pipex *data);
 
 #endif

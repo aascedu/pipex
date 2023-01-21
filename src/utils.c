@@ -6,11 +6,20 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:36:06 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/17 08:36:19 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 17:01:50 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	wrong_arg(char *error)
+{
+	if (ft_strncmp(error, "too_few", 7) == 0)
+		ft_putendl_fd("Too few args, see subject.", STDERR_FILENO);
+	if (ft_strncmp(error, "too_many", 8) == 0)
+		ft_putendl_fd("Too many args, see subject.", STDERR_FILENO);
+	exit(1);
+}
 
 void	free_tab(char **tab)
 {
@@ -25,47 +34,28 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-char	*find_path(char **envp)
+void	init_data(t_pipex *data, int argc, char **argv, char **envp)
 {
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	while (envp[i])
-	{
-		j = 0;
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		str = ft_substr(envp[i], 0, j);
-		if (ft_strncmp(str, "PATH", 5) == 0)
-			return (free(str), envp[i]);
-		free(str);
-		i++;
-	}
-	return (NULL);
+	data->ac = argc;
+	data->av = argv;
+	data->envp = envp;
 }
 
-char	*get_path(char *cmd, char **envp)
+int	my_open(t_pipex *data, char *rule)
 {
-	int		i;
-	char	*try_path;
-	char	*try_cmd;
-	char	*total_path;
-	char	**path_splitted;
+	int	fd;
 
-	total_path = find_path(envp);
-	path_splitted = ft_split(total_path + 5, ':');
-	i = 0;
-	while (path_splitted[i])
+	fd = 0;
+	if (ft_strncmp(rule, "DOC", 3) == 0)
+		fd = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
+	else if (ft_strncmp(rule, "OPEN", 4) == 0)
+		fd = open(data->av[1], O_RDONLY);
+	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
+		fd = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
+	if (fd <= 0)
 	{
-		try_path = ft_strjoin(path_splitted[i], "/");
-		try_cmd = ft_strjoin(try_path, cmd);
-		if (access(try_cmd, F_OK | X_OK) == 0)
-			return (free(try_path), free_tab(path_splitted), try_cmd);
-		free(try_cmd);
-		free(try_path);
-		i++;
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		exit(-1);
 	}
-	return (free_tab(path_splitted), NULL);
+	return (fd);
 }

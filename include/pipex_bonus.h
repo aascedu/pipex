@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/21 14:53:02 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 16:59:35 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
-#include <stdio.h>
 
 typedef struct s_pipex
 {
@@ -32,15 +31,18 @@ typedef struct s_pipex
 	char	**envp;
 }		t_pipex;
 
-int		my_open(t_pipex *data, char *rule);
+// main_bonus.c functions
+void	pipex(t_pipex *data);
 
-void	close_fd(t_pipex *data);
-void	do_cmd(t_pipex *data);
-void	free_fd(int **p_fd, int size);
+// utils_bonus.c functions
+void	wrong_arg(char *error);
 void	free_tab(char **tab);
 void	init_data(t_pipex *data, int argc, char **argv, char **envp);
-void	malloc_fd(t_pipex *data);
-void	pipex(t_pipex *data);
-void	wrong_arg(char *error);
+int		my_open(t_pipex *data, char *rule);
+
+// cmd_bonus.c functions
+char	*find_path(char **envp);
+char	*get_path(t_pipex *data, char *cmd);
+void	do_cmd(t_pipex *data);
 
 #endif

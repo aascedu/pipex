@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/21 13:13:35 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/21 17:02:28 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@ LIBFT = ./libft/libft.a
 
 HEADER = pipex.h pipex_bonus.h
 
-SRCS = src/main.c src/utils.c
-SRCS_BONUS = src_bonus/cmd_bonus.c src_bonus/exit_bonus.c \
-			src_bonus/main_bonus.c src_bonus/utils_bonus.c \
-			src_bonus/init_bonus.c \
+SRCS = src/main.c src/utils.c src/cmd.c
+SRCS_BONUS = src_bonus/cmd_bonus.c \
+			src_bonus/main_bonus.c \
+			src_bonus/utils_bonus.c \
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
