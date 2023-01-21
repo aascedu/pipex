@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/17 15:11:15 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 14:53:02 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+#include <stdio.h>
 
 typedef struct s_pipex
 {
 	int		i;
 	int		fd_entry;
 	int		fd_exit;
-	int		size;
-	int		**p_fd;
 	int		ac;
 	char	**av;
 	char	**envp;

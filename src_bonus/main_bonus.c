@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:36:41 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/17 14:44:42 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/21 15:15:28 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void	pipex(t_pipex *data)
 	if (!pid)
 	{
 		close(p_end[0]);
-		dup2(p_end[1], 1);
+		dup2(p_end[1], STDOUT_FILENO);
+		// close(p_end[1]);
 		do_cmd(data);
 	}
 	else
 	{
 		close(p_end[1]);
-		dup2(p_end[0], 0);
+		dup2(p_end[0], STDIN_FILENO);
+		// close(p_end[0]);
 	}
 }
 
@@ -42,7 +44,6 @@ int	main(int argc, char **argv, char **envp)
 	init_data(&data, argc, argv, envp);
 	if (data.ac < 5)
 		wrong_arg("too_few");
-	malloc_fd(&data);
 	if (ft_strncmp(data.av[1], "here_doc", 8) == 0)
 	{
 		// if (argc > 6)
@@ -56,10 +57,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.fd_entry = my_open(&data, "OPEN");
 		data.fd_exit = my_open(&data, "CLOSE");
+		dup2(data.fd_entry, STDIN_FILENO);
 		data.i = 1;
 	}
 	while (++data.i < data.ac - 1)
 		pipex(&data);
-	close_fd(&data);
+	dup2(data.fd_exit, STDOUT_FILENO);
+	do_cmd(&data);
+	wait(NULL);
 	return (0);
 }

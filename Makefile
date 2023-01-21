@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/17 15:14:35 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/21 13:13:35 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ all : lib
 $(NAME) : $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
 
-bonus : $(OBJS_BONUS) $(LIBFT)
+bonus : lib $(OBJS_BONUS)
 	$(CC) $(CFLAGS) $(LIBFT) $(OBJS_BONUS) -o $(NAME)
 
 lib :
