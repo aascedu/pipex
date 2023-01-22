@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:36:06 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 17:01:50 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/22 12:09:48 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ void	init_data(t_pipex *data, int argc, char **argv, char **envp)
 	data->ac = argc;
 	data->av = argv;
 	data->envp = envp;
+	data->stdin_fd = dup(0);
+	data->stdout_fd = dup(1);
+}
+
+void	restore_std(t_pipex *data)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	dup2(data->stdin_fd, STDIN_FILENO);
+	dup2(data->stdout_fd, STDOUT_FILENO);
 }
 
 int	my_open(t_pipex *data, char *rule)

@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 16:56:23 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/22 11:18:35 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,35 @@ void	init_data(t_pipex *data, int argc, char **argv, char **envp)
 	data->ac = argc;
 	data->av = argv;
 	data->envp = envp;
+	data->stdin_fd = dup(0);
+	data->stdout_fd = dup(1);
 }
 
+void	restore_std(t_pipex *data)
+{
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	dup2(data->stdin_fd, STDIN_FILENO);
+	dup2(data->stdout_fd, STDOUT_FILENO);
+}
+
+// Will open the fd for our infile and outfile according to the args,
+// and set i index to the correct "place".
 int	my_open(t_pipex *data, char *rule)
 {
 	int	fd;
 
 	fd = 0;
 	if (ft_strncmp(rule, "DOC", 3) == 0)
+	{
 		fd = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
+		data->i = 2;
+	}
 	else if (ft_strncmp(rule, "OPEN", 4) == 0)
+	{
 		fd = open(data->av[1], O_RDONLY);
+		data->i = 1;
+	}
 	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
 		fd = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
 	if (fd <= 0)

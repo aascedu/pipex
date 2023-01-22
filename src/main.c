@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:35:55 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 17:02:18 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/22 12:04:45 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ int	main(int argc, char **argv, char **envp)
 		pipex(&data);
 	while (data.i-- > 0)
 		wait(NULL);
-	return (0);
+	return (restore_std(&data), 0);
 }
