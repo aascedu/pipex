@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:35:55 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/22 12:04:45 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 13:56:27 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	main(int argc, char **argv, char **envp)
 		wrong_arg("too_few");
 	if (data.ac > 5)
 		wrong_arg("too_many");
-	data.fd_entry = my_open(&data, "OPEN");
-	data.fd_exit = my_open(&data, "CLOSE");
+	my_open(&data, "OPEN");
+	my_open(&data, "CLOSE");
 	dup2(data.fd_entry, STDIN_FILENO);
 	data.i = 1;
 	while (++data.i < data.ac - 1)

@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 10:20:30 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/22 12:00:44 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 14:32:17 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	here_doc_input(t_pipex *data, int *p_end)
 	close(p_end[0]);
 	while (1)
 	{
+		ft_putstr_fd("here_doc>", 1);
 		str = get_next_line(STDIN_FILENO);
+		if (!str)
+			exit(0);
 		if (ft_strncmp(str, data->av[2], ft_strlen(str) - 1) == 0)
 		{
 			free(str);

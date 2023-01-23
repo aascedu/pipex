@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 15:12:19 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/22 13:51:19 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/23 14:41:56 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,6 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-	@echo "$(BOLD)libft.a$(END) has been $(GREEN)deleted !$(END)"
 
 re: fclean
 	@make all

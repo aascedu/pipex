@@ -6,20 +6,11 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/22 11:18:35 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:27:54 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	wrong_arg(char *error)
-{
-	if (ft_strncmp(error, "too_few", 7) == 0)
-		ft_putendl_fd("Too few args, see subject.", STDERR_FILENO);
-	if (ft_strncmp(error, "too_many", 8) == 0)
-		ft_putendl_fd("Too many args, see subject.", STDERR_FILENO);
-	exit(1);
-}
 
 void	free_tab(char **tab)
 {
@@ -51,29 +42,25 @@ void	restore_std(t_pipex *data)
 	dup2(data->stdout_fd, STDOUT_FILENO);
 }
 
-// Will open the fd for our infile and outfile according to the args,
-// and set i index to the correct "place".
-int	my_open(t_pipex *data, char *rule)
+void	my_open(t_pipex *data, char *rule)
 {
-	int	fd;
-
-	fd = 0;
 	if (ft_strncmp(rule, "DOC", 3) == 0)
 	{
-		fd = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
-		data->i = 2;
+		if (open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644) < 0)
+			return (open_error(data->av[data->ac - 1]));
+		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
 	}
 	else if (ft_strncmp(rule, "OPEN", 4) == 0)
 	{
-		fd = open(data->av[1], O_RDONLY);
+		data->fd_entry = open(data->av[1], O_RDONLY);
 		data->i = 1;
+		if (data->fd_entry < 0)
+			open_error(data->av[1]);
 	}
 	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
-		fd = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (fd <= 0)
 	{
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		exit(-1);
+		if (open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644) < 0)
+			return (open_error(data->av[data->ac - 1]));
+		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
 	}
-	return (fd);
 }

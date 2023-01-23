@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:00 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 16:59:01 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:30:50 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,13 @@ void	do_cmd(t_pipex *data)
 	path = get_path(data, cmd_splitted[0]);
 	if (!path)
 	{
-		ft_putendl_fd("Command not found", STDERR_FILENO);
-		exit(1);
+		ft_putstr_fd("Command not found: ", STDERR_FILENO);
+		ft_putendl_fd(data->av[data->i], STDERR_FILENO);
 	}
-	if (execve(path, cmd_splitted, data->envp) == 0)
+	if (execve(path, cmd_splitted, data->envp) == -1)
 	{
 		free(path);
 		free_tab(cmd_splitted);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		exit(1);
 	}
 }

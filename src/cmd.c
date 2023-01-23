@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:01:15 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/21 17:01:30 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 13:52:12 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_path(t_pipex *data, char *cmd)
 	char	*total_path;
 	char	**path_splitted;
 
-	if (access(cmd, F_OK | X_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	total_path = find_path(data->envp);
 	path_splitted = ft_split(total_path + 5, ':');
@@ -50,7 +50,7 @@ char	*get_path(t_pipex *data, char *cmd)
 	{
 		try_path = ft_strjoin(path_splitted[i], "/");
 		try_cmd = ft_strjoin(try_path, cmd);
-		if (access(try_cmd, F_OK | X_OK) == 0)
+		if (access(try_cmd, X_OK) == 0)
 			return (free(try_path), free_tab(path_splitted), try_cmd);
 		free(try_cmd);
 		free(try_path);
@@ -68,14 +68,12 @@ void	do_cmd(t_pipex *data)
 	path = get_path(data, cmd_splitted[0]);
 	if (!path)
 	{
-		ft_putendl_fd("Command not found", STDERR_FILENO);
-		exit(1);
-	}
-	if (execve(path, cmd_splitted, data->envp) == 0)
-	{
-		free(path);
+		ft_putstr_fd("Command not found: ", STDERR_FILENO);
+		ft_putendl_fd(data->av[data->i], STDERR_FILENO);
 		free_tab(cmd_splitted);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		exit(1);
 	}
+	execve(path, cmd_splitted, data->envp);
+	ft_putendl_fd(strerror(errno), STDERR_FILENO);
+	exit(1);
 }

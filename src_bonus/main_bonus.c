@@ -6,11 +6,17 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:36:41 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/22 11:19:02 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/23 16:34:05 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+static void	reset_pipe(t_pipex *pipex, int i)
+{
+		close(p_end[0]);
+		close(pipex->pipe_1[1]);
+}
 
 void	pipex(t_pipex *data)
 {
@@ -30,6 +36,7 @@ void	pipex(t_pipex *data)
 		{
 			dup2(p_end[1], STDOUT_FILENO);
 			close(p_end[0]);
+			close(p_end[1]);
 		}
 		do_cmd(data);
 	}
@@ -37,6 +44,7 @@ void	pipex(t_pipex *data)
 	{
 		dup2(p_end[0], STDIN_FILENO);
 		close(p_end[1]);
+		close(p_end[0]);
 	}
 }
 
@@ -51,13 +59,14 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (data.ac > 6)
 			wrong_arg("too_many");
-		data.fd_exit = my_open(&data, "DOC");
+		my_open(&data, "DOC");
 		here_doc(&data);
+		data.i = 2;
 	}
 	else
 	{
-		data.fd_entry = my_open(&data, "OPEN");
-		data.fd_exit = my_open(&data, "CLOSE");
+		my_open(&data, "OPEN");
+		my_open(&data, "CLOSE");
 		dup2(data.fd_entry, STDIN_FILENO);
 	}
 	while (++data.i < data.ac - 1)
