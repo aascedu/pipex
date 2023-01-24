@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/23 16:27:54 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 15:31:32 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ void	my_open(t_pipex *data, char *rule)
 {
 	if (ft_strncmp(rule, "DOC", 3) == 0)
 	{
-		if (open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644) < 0)
-			return (open_error(data->av[data->ac - 1]));
 		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
+		data->i = 2;
+		if (data->fd_exit < 0)
+			open_error(data->av[data->ac - 1]);
 	}
 	else if (ft_strncmp(rule, "OPEN", 4) == 0)
 	{
@@ -59,8 +60,8 @@ void	my_open(t_pipex *data, char *rule)
 	}
 	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
 	{
-		if (open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644) < 0)
-			return (open_error(data->av[data->ac - 1]));
 		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
+		if (data->fd_exit < 0)
+			open_error(data->av[data->ac - 1]);
 	}
 }

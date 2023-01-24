@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/23 16:08:19 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/24 13:39:36 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = src/main.c src/utils.c src/cmd.c src/error.c
 SRCS_BONUS = src_bonus/cmd_bonus.c \
 			src_bonus/main_bonus.c \
 			src_bonus/utils_bonus.c \
+			src_bonus/utils2_bonus.c \
 			src_bonus/here_doc_bonus.c \
 			src_bonus/error_bonus.c \
 
@@ -35,7 +36,7 @@ OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 CC = @cc
-CFLAGS =  -I./include -Wall -Werror -Wextra #-fsanitize=address -g3
+CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
 RM = @rm -rf
 
 

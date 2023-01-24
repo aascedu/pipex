@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 10:20:30 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/23 14:32:17 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/24 16:21:30 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	here_doc_input(t_pipex *data, int *p_end)
 {
 	char	*str;
 
-	close(p_end[0]);
 	while (1)
 	{
 		ft_putstr_fd("here_doc>", 1);
@@ -35,8 +34,8 @@ void	here_doc_input(t_pipex *data, int *p_end)
 
 void	here_doc(t_pipex *data)
 {
-	pid_t	read_proc;
 	int		p_end[2];
+	pid_t	read_proc;
 
 	if (pipe(p_end) == -1)
 		exit(1);
@@ -50,5 +49,52 @@ void	here_doc(t_pipex *data)
 		close(p_end[1]);
 		dup2(p_end[0], STDIN_FILENO);
 		wait(NULL);
+	}
+}
+
+void	set_pipe_here_doc(t_pipex *data)
+{
+	if (data->i == index_first_cmd(data))
+	{
+		dup2(data->p_end2[0], STDIN_FILENO);
+		dup2(data->p_end1[1], STDOUT_FILENO);
+	}
+	else if (data->i == data->ac - 2)
+	{
+		if (data->i % 2 == 0)
+			dup2(data->p_end2[0], STDIN_FILENO);
+		else
+			dup2(data->p_end1[0], STDIN_FILENO);
+		dup2(data->fd_exit, STDOUT_FILENO);
+	}
+	else if (data->i % 2 != 0)
+	{
+		dup2(data->p_end1[0], STDIN_FILENO);
+		dup2(data->p_end2[1], STDOUT_FILENO);
+	}
+	else
+	{
+		dup2(data->p_end2[0], STDIN_FILENO);
+		dup2(data->p_end1[1], STDOUT_FILENO);
+	}
+}
+
+void	pipex_here_doc(t_pipex *data)
+{
+	pid_t	pid;
+
+	while (++data->i < data->ac - 1)
+	{
+		if (data->i >= 4)
+			reset_pipe(data);
+		pid = fork();
+		if (pid == -1)
+			exit(0);
+		if (!pid)
+		{
+			set_pipe_here_doc(data);
+			my_close(data);
+			do_cmd(data);
+		}
 	}
 }
