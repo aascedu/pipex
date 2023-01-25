@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/24 13:39:36 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/25 13:59:19 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,20 +31,21 @@ SRCS_BONUS = src_bonus/cmd_bonus.c \
 			src_bonus/utils2_bonus.c \
 			src_bonus/here_doc_bonus.c \
 			src_bonus/error_bonus.c \
+			src_bonus/pipex_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-CC = @cc
+CC = cc
 CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
-RM = @rm -rf
+RM = rm -rf
 
 
 all : lib
-	@make $(NAME)
+	make $(NAME)
 
 lib :
-	@make -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR)
 
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@

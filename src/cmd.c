@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:01:15 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/23 13:52:12 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:40:50 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void	do_cmd(t_pipex *data)
 		free_tab(cmd_splitted);
 		exit(1);
 	}
-	execve(path, cmd_splitted, data->envp);
-	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	exit(1);
+	if (execve(path, cmd_splitted, data->envp) == -1)
+	{
+		free(path);
+		free_tab(cmd_splitted);
+	}
 }

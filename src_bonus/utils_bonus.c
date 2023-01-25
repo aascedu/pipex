@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:35 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/24 15:31:32 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 16:35:38 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	my_open(t_pipex *data, char *rule)
 {
 	if (ft_strncmp(rule, "DOC", 3) == 0)
 	{
-		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
+		data->fd_exit = open(data->av[data->ac - 1], \
+		O_RDWR | O_APPEND | O_CREAT, 0644);
 		data->i = 2;
 		if (data->fd_exit < 0)
 			open_error(data->av[data->ac - 1]);
@@ -56,11 +57,15 @@ void	my_open(t_pipex *data, char *rule)
 		data->fd_entry = open(data->av[1], O_RDONLY);
 		data->i = 1;
 		if (data->fd_entry < 0)
+		{
+			data->i = 2;
 			open_error(data->av[1]);
+		}
 	}
 	else if (ft_strncmp(rule, "CLOSE", 5) == 0)
 	{
-		data->fd_exit = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
+		data->fd_exit = open(data->av[data->ac - 1], \
+		O_RDWR | O_TRUNC | O_CREAT, 0644);
 		if (data->fd_exit < 0)
 			open_error(data->av[data->ac - 1]);
 	}

@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 09:32:55 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/25 13:26:35 by aascedu          ###   ########lyon.fr   */
+/*   Created: 2023/01/25 13:51:40 by aascedu           #+#    #+#             */
+/*   Updated: 2023/01/25 13:57:26 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex_bonus.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	pipex(t_pipex *data)
 {
-	size_t	i;
+	pid_t	pid;
 
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (i < n - 1 && (s1[i] && s2[i]))
+	my_open(data, "OPEN");
+	my_open(data, "CLOSE");
+	init_pipes(data);
+	while (++data->i < data->ac - 1)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		if (data->i >= 3)
+			reset_pipe(data);
+		pid = fork();
+		if (pid == -1)
+			exit(0);
+		if (!pid)
+		{
+			set_pipe(data);
+			my_close(data);
+			do_cmd(data);
+		}
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

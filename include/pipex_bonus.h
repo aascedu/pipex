@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/24 16:20:06 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/25 14:04:53 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <stdio.h>
 
 typedef struct s_pipex
 {
@@ -35,11 +36,8 @@ typedef struct s_pipex
 	int		stdin_fd;
 }		t_pipex;
 
-// main_bonus.c functions
+// pipex_bonus.c functions
 void	pipex(t_pipex *data);
-void	init_pipes(t_pipex *data);
-void	set_pipe(t_pipex *data);
-void	my_close(t_pipex *data);
 
 // utils_bonus.c functions
 void	free_tab(char **tab);
@@ -51,6 +49,9 @@ void	set_pipe(t_pipex *data);
 // utils2_bonus.c
 int		index_first_cmd(t_pipex *data);
 void	reset_pipe(t_pipex *data);
+void	init_pipes(t_pipex *data);
+void	set_pipe(t_pipex *data);
+void	my_close(t_pipex *data);
 
 // cmd_bonus.c functions
 char	*find_path(char **envp);
@@ -59,9 +60,10 @@ void	do_cmd(t_pipex *data);
 
 // here_doc_bonus.c functions
 void	here_doc(t_pipex *data);
-void	here_doc_input(t_pipex *data, int *p_end);
+void	here_doc_input(t_pipex *data);
 void	pipex_here_doc(t_pipex *data);
 void	set_pipe_here_doc(t_pipex *data);
+void	reset_pipe_here_doc(t_pipex *data);
 
 // error_bonus.c functions
 void	wrong_arg(char *error);
