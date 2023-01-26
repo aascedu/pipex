@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/26 13:02:11 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 15:22:11 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,12 @@ BONUS_CHECK = 0
 
 LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
+LIBFT_HDR = ./libft/include/libft.h
 
-HEADER = pipex.h pipex_bonus.h
+HEADER = include/pipex.h include/pipex_bonus.h
 
 SRCS = src/main.c src/utils.c src/utils2.c src/cmd.c src/error.c src/pipex.c
+
 SRCS_BONUS = src_bonus/cmd_bonus.c \
 			src_bonus/main_bonus.c \
 			src_bonus/utils_bonus.c \
@@ -39,6 +41,8 @@ CC = cc
 CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
 RM = rm -rf
 
+%.o : %.c $(HEADER) $(LIBFT_HDR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all : lib
 	make $(NAME)
@@ -46,20 +50,17 @@ all : lib
 lib :
 	make -C $(LIBFT_DIR)
 
-%.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
-
 bonus :
 	@make BONUS_CHECK=1
 
-$(NAME) : $(LIBFT)
-	$(CC) $(CFLAGS) $(LIBFT) $^ -o $@
-
 ifeq ($(BONUS_CHECK), 0)
-$(NAME) : $(OBJS)
+FILE = $(OBJS)
 else
-$(NAME) : $(OBJS_BONUS)
+FILE = $(OBJS_BONUS)
 endif
+
+$(NAME) : $(FILE) $(LIBFT) $(HEADER) $(LIBFT_HDR)
+	$(CC) $(CFLAGS) $(LIBFT) $(FILE) -o $(NAME)
 
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
