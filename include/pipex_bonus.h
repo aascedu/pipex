@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/26 15:58:24 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 16:20:18 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ void	my_close(t_pipex *data);
 char	*find_path(char **envp);
 char	*get_path(t_pipex *data, char *cmd);
 void	do_cmd(t_pipex *data);
-
-// here_doc_bonus.c functions
-void	here_doc(t_pipex *data);
-void	here_doc_input(t_pipex *data);
-void	pipex_here_doc(t_pipex *data);
-void	set_pipe_here_doc(t_pipex *data);
-void	reset_pipe_here_doc(t_pipex *data);
 
 // error_bonus.c functions
 void	wrong_arg(char *error);

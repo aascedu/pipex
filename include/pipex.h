@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/26 12:30:12 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 16:20:49 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,27 @@ typedef struct s_pipex
 // pipex.c functions
 void	pipex(t_pipex *data);
 
-// utils_bonus.c functions
+// utils.c functions
 void	free_tab(char **tab);
 void	init_data(t_pipex *data, int argc, char **argv, char **envp);
 void	restore_std(t_pipex *data);
 void	my_open(t_pipex *data, char *rule);
 void	set_pipe(t_pipex *data);
 
-// utils2_bonus.c
+// utils2.c
 void	reset_pipe(t_pipex *data);
 void	init_pipes(t_pipex *data);
 void	set_pipe(t_pipex *data);
 void	my_close(t_pipex *data);
 
-// cmd_bonus.c functions
+// cmd.c functions
 char	*find_path(char **envp);
 char	*get_path(t_pipex *data, char *cmd);
 void	do_cmd(t_pipex *data);
 
-// error_bonus.c functions
-void	wrong_arg(char *error);
+// error.c functions
+void	wrong_arg(void);
 void	open_error(char *str);
+void	path_error(void);
 
 #endif

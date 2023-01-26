@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/26 15:22:11 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 16:38:40 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@
 BOLD = $'\x1b[1m
 END=$'\x1b[0m
 GREEN=$'\x1b[32m
+CYAN=$'\x1b[36m
+PURPLE=$'\x1b[35m
 
 NAME = pipex
 
@@ -37,18 +39,27 @@ SRCS_BONUS = src_bonus/cmd_bonus.c \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-CC = cc
+CC = @cc
 CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
-RM = rm -rf
+RM = @rm -rf
 
 %.o : %.c $(HEADER) $(LIBFT_HDR)
+	@echo "$(GREEN)$(BOLD)$<$(END) $(BOLD)compiled !$(END)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all : lib
-	make $(NAME)
+	@echo
+	@echo "$(CYAN)$(BOLD)--------------------$(END)"
+	@echo "$(CYAN)$(BOLD)|$(END) Now making $(CYAN)$(BOLD)pipex$(END) $(CYAN)$(BOLD)|$(END)"
+	@echo "$(CYAN)$(BOLD)--------------------$(END)"
+	@echo
+	@make $(NAME)
+	@echo
+	@echo "$(BOLD)pipex$(END)$(BOLD)$(GREEN) created$(END) $(BOLD)!$(END) (./pipex infile cmd1 cmd2 outfile or ./pipex infile cmd1 ... cmdn outfile)"
+	@echo
 
 lib :
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 bonus :
 	@make BONUS_CHECK=1
@@ -65,6 +76,10 @@ $(NAME) : $(FILE) $(LIBFT) $(HEADER) $(LIBFT_HDR)
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	@make clean -C $(LIBFT_DIR)
+	@echo
+	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
+	@echo "$(PURPLE)$(BOLD)|$(END) Cleaned $(PURPLE)$(BOLD)pipex |$(END)"
+	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
 
 fclean : clean
 	$(RM) $(NAME) $(NAME_BONUS)

@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:01:15 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/26 16:07:45 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 16:10:45 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ char	*find_path(char **envp)
 		while (envp[i][j] && envp[i][j] != '=')
 			j++;
 		str = ft_substr(envp[i], 0, j);
+		if (!str)
+		{
+			perror("ft_substr");
+			exit(1);
+		}
 		if (ft_strncmp(str, "PATH", 5) == 0)
 			return (free(str), envp[i]);
 		free(str);
@@ -44,6 +49,8 @@ char	*get_path(t_pipex *data, char *cmd)
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	total_path = find_path(data->envp);
+	if (!total_path)
+		path_error();
 	path_splitted = ft_split(total_path + 5, ':');
 	i = 0;
 	while (path_splitted[i])
@@ -73,10 +80,6 @@ void	do_cmd(t_pipex *data)
 		free_tab(cmd_splitted);
 		exit(1);
 	}
-	if (data->i == 2 && data->fd_entry < 0)
-		return (free_tab(cmd_splitted), free(path));
-	if (data->i == data->ac - 2 && data->fd_exit < 0)
-		return (free_tab(cmd_splitted), free(path));
 	if (execve(path, cmd_splitted, data->envp) == -1)
 	{
 		free(path);

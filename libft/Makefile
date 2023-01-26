@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 15:12:19 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/26 15:11:47 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 16:36:58 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,13 @@
 BOLD = $'\x1b[1m
 END=$'\x1b[0m
 GREEN=$'\x1b[32m
+CYAN=$'\x1b[36m
+PURPLE=$'\x1b[35m
 
 SRC_DIR = ./src/
 
 SRCS =  ft_strlen.c ft_bzero.c ft_strncmp.c ft_calloc.c ft_substr.c \
 		ft_strjoin.c ft_split.c ft_putstr_fd.c ft_putendl_fd.c \
-		get_next_line.c get_next_line_utils.c \
 
 SRCS_PREFIX = $(addprefix $(SRC_DIR), $(SRCS))
 
@@ -29,24 +30,32 @@ HEADER = ./include/libft.h
 OBJS = $(SRCS:.c=.o)
 OBJS_DIR = objects/
 
-CC = cc
-RM = rm -rf
+CC = @cc
+RM = @rm -rf
 CFLAGS = -Wall -Werror -Wextra -I./include/
-AR = ar
+AR = @ar
 ARFLAGS = rcs
 
 NAME = libft.a
 
 all: $(OBJS_DIR)
+	@echo
+	@echo "$(CYAN)$(BOLD)--------------------$(END)"
+	@echo "$(CYAN)$(BOLD)|$(END) Now making $(CYAN)$(BOLD)libft$(END) $(CYAN)$(BOLD)|$(END)"
+	@echo "$(CYAN)$(BOLD)--------------------$(END)"
+	@echo
 	@make $(NAME)
 
 $(OBJS_DIR) :
 	@mkdir $(OBJS_DIR)
 
 $(OBJS_DIR)%.o : $(SRC_DIR)%.c $(HEADER)
+	@echo "$(GREEN)$(BOLD)$<$(END) $(BOLD)compiled !$(END)"
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(addprefix $(OBJS_DIR), $(OBJS))
+	@echo
+	@echo "$(BOLD)$@$(END) $(GREEN)$(BOLD)created !$(END)"
 	$(AR) $(ARFLAGS) $(NAME) $(addprefix $(OBJS_DIR), $(OBJS))
 
 clean:

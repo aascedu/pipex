@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:00 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/26 15:57:54 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 16:10:43 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_path(t_pipex *data, char *cmd)
 	char	*total_path;
 	char	**path_splitted;
 
-	if (access(cmd, F_OK | X_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 		return (cmd);
 	total_path = find_path(data->envp);
 	if (!total_path)
@@ -57,7 +57,7 @@ char	*get_path(t_pipex *data, char *cmd)
 	{
 		try_path = ft_strjoin(path_splitted[i], "/");
 		try_cmd = ft_strjoin(try_path, cmd);
-		if (access(try_cmd, F_OK | X_OK) == 0)
+		if (access(try_cmd, X_OK) == 0)
 			return (free(try_path), free_tab(path_splitted), try_cmd);
 		free(try_cmd);
 		free(try_path);
