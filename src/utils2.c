@@ -6,18 +6,11 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 16:49:57 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/25 16:50:05 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:37:03 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	index_first_cmd(t_pipex *data)
-{
-	if (ft_strncmp(data->av[1], "here_doc", ft_strlen(data->av[1]) == 0))
-		return (3);
-	return (2);
-}
 
 void	reset_pipe(t_pipex *data)
 {
@@ -57,7 +50,7 @@ void	my_close(t_pipex *data)
 
 void	set_pipe(t_pipex *data)
 {
-	if (data->i == index_first_cmd(data))
+	if (data->i == 2)
 	{
 		dup2(data->fd_entry, STDIN_FILENO);
 		dup2(data->p_end1[1], STDOUT_FILENO);

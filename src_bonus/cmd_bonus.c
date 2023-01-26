@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 08:37:00 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/25 16:40:53 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:53:25 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void	do_cmd(t_pipex *data)
 		free_tab(cmd_splitted);
 		exit(1);
 	}
+	if (data->i == 2 && data->fd_entry < 0)
+		return (free_tab(cmd_splitted), free(path));
+	if (data->i == data->ac - 2 && data->fd_exit < 0)
+		return (free_tab(cmd_splitted), free(path));
 	if (execve(path, cmd_splitted, data->envp) == -1)
 	{
 		free(path);

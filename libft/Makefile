@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 15:12:19 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/23 14:41:56 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 13:00:19 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,10 @@ HEADER = ./include/libft.h
 OBJS = $(SRCS:.c=.o)
 OBJS_DIR = objects/
 
-CC = @cc
-RM = @rm -rf
+CC = cc
+RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra -I./include/
-AR = @ar
+AR = ar
 ARFLAGS = rcs
 
 NAME = libft.a

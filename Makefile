@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/25 16:50:55 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 13:02:11 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,10 +49,10 @@ lib :
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-#bonus :
-#	@make BONUS_CHECK=1
+bonus :
+	@make BONUS_CHECK=1
 
-$(NAME) :
+$(NAME) : $(LIBFT)
 	$(CC) $(CFLAGS) $(LIBFT) $^ -o $@
 
 ifeq ($(BONUS_CHECK), 0)
@@ -62,11 +62,11 @@ $(NAME) : $(OBJS_BONUS)
 endif
 
 clean :
-	$(RM)
+	$(RM) $(OBJS) $(OBJS_BONUS)
 	@make clean -C $(LIBFT_DIR)
 
 fclean : clean
-	$(RM) $(NAME) $(NAME_BONUS) $(OBJS) $(OBJS_BONUS)
+	$(RM) $(NAME) $(NAME_BONUS)
 	@make fclean -C $(LIBFT_DIR)
 
 re : fclean

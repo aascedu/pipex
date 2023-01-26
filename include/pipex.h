@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/25 16:51:14 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:30:12 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <stdio.h>
 
 typedef struct s_pipex
 {
@@ -46,7 +47,6 @@ void	my_open(t_pipex *data, char *rule);
 void	set_pipe(t_pipex *data);
 
 // utils2_bonus.c
-int		index_first_cmd(t_pipex *data);
 void	reset_pipe(t_pipex *data);
 void	init_pipes(t_pipex *data);
 void	set_pipe(t_pipex *data);

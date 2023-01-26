@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/25 14:04:53 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 12:30:10 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	my_open(t_pipex *data, char *rule);
 void	set_pipe(t_pipex *data);
 
 // utils2_bonus.c
-int		index_first_cmd(t_pipex *data);
 void	reset_pipe(t_pipex *data);
 void	init_pipes(t_pipex *data);
 void	set_pipe(t_pipex *data);
