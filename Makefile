@@ -6,7 +6,7 @@
 #    By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 13:02:47 by aascedu           #+#    #+#              #
-#    Updated: 2023/01/26 16:38:40 by aascedu          ###   ########lyon.fr    #
+#    Updated: 2023/01/26 16:44:19 by aascedu          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ $(NAME) : $(FILE) $(LIBFT) $(HEADER) $(LIBFT_HDR)
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	@make clean -C $(LIBFT_DIR)
-	@echo
 	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
 	@echo "$(PURPLE)$(BOLD)|$(END) Cleaned $(PURPLE)$(BOLD)pipex |$(END)"
 	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
