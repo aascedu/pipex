@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 17:57:00 by arthurasced       #+#    #+#             */
-/*   Updated: 2023/01/26 12:30:10 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/01/26 15:58:24 by aascedu          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ void	reset_pipe_here_doc(t_pipex *data);
 // error_bonus.c functions
 void	wrong_arg(char *error);
 void	open_error(char *str);
+void	path_error(void);
 
 #endif
