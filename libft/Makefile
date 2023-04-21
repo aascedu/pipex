@@ -10,13 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-# EFFECTS
-BOLD = $'\x1b[1m
-END=$'\x1b[0m
-GREEN=$'\x1b[32m
-CYAN=$'\x1b[36m
-PURPLE=$'\x1b[35m
-
 SRC_DIR = ./src/
 
 SRCS =  ft_strlen.c ft_bzero.c ft_strncmp.c ft_calloc.c ft_substr.c \
@@ -30,32 +23,24 @@ HEADER = ./include/libft.h
 OBJS = $(SRCS:.c=.o)
 OBJS_DIR = objects/
 
-CC = @cc
-RM = @rm -rf
+CC = cc
+RM = rm -rf
 CFLAGS = -Wall -Werror -Wextra -I./include/
-AR = @ar
+AR = ar
 ARFLAGS = rcs
 
 NAME = libft.a
 
 all: $(OBJS_DIR)
-	@echo
-	@echo "$(CYAN)$(BOLD)--------------------$(END)"
-	@echo "$(CYAN)$(BOLD)|$(END) Now making $(CYAN)$(BOLD)libft$(END) $(CYAN)$(BOLD)|$(END)"
-	@echo "$(CYAN)$(BOLD)--------------------$(END)"
-	@echo
-	@make $(NAME)
+	make $(NAME)
 
 $(OBJS_DIR) :
-	@mkdir $(OBJS_DIR)
+	mkdir $(OBJS_DIR)
 
 $(OBJS_DIR)%.o : $(SRC_DIR)%.c $(HEADER)
-	@echo "$(GREEN)$(BOLD)$<$(END) $(BOLD)compiled !$(END)"
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(addprefix $(OBJS_DIR), $(OBJS))
-	@echo
-	@echo "$(BOLD)$@$(END) $(GREEN)$(BOLD)created !$(END)"
 	$(AR) $(ARFLAGS) $(NAME) $(addprefix $(OBJS_DIR), $(OBJS))
 
 clean:
@@ -65,6 +50,6 @@ fclean: clean
 	$(RM) $(NAME)
 
 re: fclean
-	@make all
+	make all
 
 .PHONY: all clean fclean re

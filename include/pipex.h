@@ -6,7 +6,7 @@
 /*   By: aascedu <aascedu@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 13:04:25 by aascedu           #+#    #+#             */
-/*   Updated: 2023/01/26 16:20:49 by aascedu          ###   ########lyon.fr   */
+/*   Updated: 2023/04/21 13:52:22 by aascedu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <string.h>
 # include <stdio.h>
+# include <stdint.h>
 
 typedef struct s_pipex
 {

@@ -39,30 +39,21 @@ SRCS_BONUS = src_bonus/cmd_bonus.c \
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-CC = @cc
+CC = cc
 CFLAGS =  -I./include -Wall -Werror -Wextra -fsanitize=address -g3
-RM = @rm -rf
+RM = rm -rf
 
 %.o : %.c $(HEADER) $(LIBFT_HDR)
-	@echo "$(GREEN)$(BOLD)$<$(END) $(BOLD)compiled !$(END)"
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all : lib
-	@echo
-	@echo "$(CYAN)$(BOLD)--------------------$(END)"
-	@echo "$(CYAN)$(BOLD)|$(END) Now making $(CYAN)$(BOLD)pipex$(END) $(CYAN)$(BOLD)|$(END)"
-	@echo "$(CYAN)$(BOLD)--------------------$(END)"
-	@echo
-	@make $(NAME)
-	@echo
-	@echo "$(BOLD)pipex$(END)$(BOLD)$(GREEN) created$(END) $(BOLD)!$(END) (./pipex infile cmd1 cmd2 outfile or ./pipex infile cmd1 ... cmdn outfile)"
-	@echo
+	make $(NAME)
 
 lib :
-	@make -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR)
 
 bonus :
-	@make BONUS_CHECK=1
+	make BONUS_CHECK=1
 
 ifeq ($(BONUS_CHECK), 0)
 FILE = $(OBJS)
@@ -71,20 +62,17 @@ FILE = $(OBJS_BONUS)
 endif
 
 $(NAME) : $(FILE) $(LIBFT) $(HEADER) $(LIBFT_HDR)
-	$(CC) $(CFLAGS) $(LIBFT) $(FILE) -o $(NAME)
+	$(CC) $(CFLAGS) $(FILE) -o $(NAME) $(LIBFT)
 
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
-	@make clean -C $(LIBFT_DIR)
-	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
-	@echo "$(PURPLE)$(BOLD)|$(END) Cleaned $(PURPLE)$(BOLD)pipex |$(END)"
-	@echo "$(PURPLE)$(BOLD)-----------------$(END)"
+	make clean -C $(LIBFT_DIR)
 
 fclean : clean
 	$(RM) $(NAME) $(NAME_BONUS)
-	@make fclean -C $(LIBFT_DIR)
+	make fclean -C $(LIBFT_DIR)
 
 re : fclean
-	@make all
+	make all
 
 .PHONY : all lib clean fclean bonus re
